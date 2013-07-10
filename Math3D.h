@@ -31,6 +31,21 @@ namespace Math3D {
 
   // 3D Math classes.
 
+  class Angle {
+  public:
+    enum Units { RADIAN, DEGREES };
+
+    Angle();
+    Angle(float);
+    Angle(float, Units);
+
+    float toRadian();
+    float toDegree();
+
+  private:
+    float _radian;
+  };
+
   class Vector {
   public:
     float x;
@@ -52,22 +67,27 @@ namespace Math3D {
 
   class Euler {
   public:
-    float theta;
-    float phi;
-    float psi;
+    Angle theta;
+    Angle phi;
+    Angle psi;
 
     Euler();
-    Euler(float, float, float);
+    Euler(const Angle&, const Angle&, const Angle&);
+    Euler(float, float, float, Angle::Units);
+    Euler fromPitchRollYaw(const Angle&, const Angle&, const Angle&);
+    Euler fromPitchRollYaw(float, float, float, Angle::Units);
   };
 
   class AxisAngle {
   public:
-    float angle;
+    Angle angle;
     Vector axis;
 
     AxisAngle();
-    AxisAngle(const Vector&, float);
-    AxisAngle(float, float, float, float);
+    AxisAngle(const Vector&, const Angle&);
+    AxisAngle(const Vector&, float, Angle::Units);
+    AxisAngle(float, float, float, const Angle&);
+    AxisAngle(float, float, float, float, Angle::Units);
   };
 
   class Complex {
